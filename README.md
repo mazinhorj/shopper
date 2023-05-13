@@ -7,13 +7,13 @@ Em fase de desenvolvimento
 
 # Instalação
 
-[Backend](#Backend)
-[Frontend](#Frontend)
+[Backend](#Backend) | [Frontend](#Frontend)
 
 
 ## Backend
 1. Criar e popular banco de dados
-  1.1. Clique <a href="">aqui</a> para baixar a base de dados.
+
+    1.1. Clique <a href="">aqui</a> para baixar a base de dados.
 
 2. Abrir a pasta backend em um terminal e rodar o comando:
   <pre>npm install</pre>
