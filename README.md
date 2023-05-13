@@ -17,9 +17,11 @@ Em fase de desenvolvimento
 
 
 ## Backend
-1. Criar e popular banco de dados
+1. Estando na pasta do projeto, abra a pasta "backend";
 
-    1.1. Clique <a href="">aqui</a> para baixar a base de dados.
+2. Criar e popular banco de dados:
+
+    1.1. Encontre o arquivo <pre>database.sql</pre>.
 
 2. Abrir a pasta backend em um terminal e rodar o comando:
         <pre>npm install</pre>
@@ -50,4 +52,5 @@ OBS. Para quaisquer problemas na instalaçao, favor entrar em contato diretament
 
 
 ## Frontend
+
 
