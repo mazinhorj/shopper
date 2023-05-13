@@ -7,6 +7,8 @@ Em fase de desenvolvimento
 
 # Instalação
 
+Faça o download do projeto clicando <a href="https://github.com/mazinhorj/shopper/archive/refs/heads/main.zip"> aqui</a>.
+
 [Backend](#Backend) | [Frontend](#Frontend)
 
 
