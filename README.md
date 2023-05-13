@@ -21,7 +21,7 @@ Em fase de desenvolvimento
 
 2. Criar e popular banco de dados:
 
-    1.1. Encontre o arquivo <pre>database.sql</pre>.
+    1.1. Encontre o arquivo <code>database.sql</code>.
 
 2. Abrir a pasta backend em um terminal e rodar o comando:
         <pre>npm install</pre>
