@@ -47,7 +47,18 @@ o script que define e preenche as tabelas utilizados na aplicação.
 
 6. Se tudo etiver correto, o backend da aplicação deverá estar ativo e você receberá no terminal a seguinte mensagem:
 
-        />> Mensagem do backend <<\
+        > backend@1.0.0 start
+        > nodemon ./index.js localhost 5000
+
+        [nodemon] 2.0.22
+        [nodemon] to restart at any time, enter `rs`
+        [nodemon] watching path(s): *.*
+        [nodemon] watching extensions: js,mjs,json
+        [nodemon] starting `node ./index.js localhost 5000`
+        DB connected.
+        Server status: Loaded and running on port 5000.
+        Executing (default): SELECT 1+1 AS result
+        Executing (default): SELECT 1+1 AS result
 
 <hr>
 
