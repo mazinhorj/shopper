@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Teste técnico - Desenvolvimento de Software JR. Full Stack - Shopper.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js localhost 5000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mazinhorj/shopper.git"
+  },
+  "author": "Osmar Menezes da Silva (Mazinho)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mazinhorj/shopper/issues"
+  },
+  "homepage": "https://github.com/mazinhorj/shopper#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "sequelize": "^6.31.1"
+  }
+}
