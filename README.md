@@ -1,4 +1,4 @@
-# shopper
+# Shopper
 Teste técnico - Desenvolvimento de Software JR. Full Stack - Shopper.com
 
 
@@ -37,6 +37,14 @@ DB_NAME= // nome do banco de dados
 DB_DIALECT=mysql
 
 PORT=5000
+
+4. Rode no terminal o comando:
+  <pre>npm start</pre>
+
+5. Se tudo etiver correto, o backend da aplicação deverá estar ativo e você receberá no terminal a seguinte mensagem:
+    />> Mensagem do backend <<\
+
+OBS. Para quaisquer problemas na instalaçao, favor entrar em contato diretamente com o desenvolvedor: <a href="mailto:dev.mazinho@gmail.com">Mazinho</a>
 
 
 
