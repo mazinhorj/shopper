@@ -5,11 +5,15 @@ Teste técnico - Desenvolvimento de Software JR. Full Stack - Shopper.com
 # Sobre o aplicativo
 Em fase de desenvolvimento
 
+# Ir para...
+[Instalação](#Instalação) | [Backend](#Backend) | [Frontend](#Frontend)
+
 # Instalação
 
-Faça o download do projeto clicando <a href="https://github.com/mazinhorj/shopper/archive/refs/heads/main.zip"> aqui</a>.
+1. Faça o download do projeto clicando <a href="https://github.com/mazinhorj/shopper/archive/refs/heads/main.zip"> aqui</a>.
 
-[Backend](#Backend) | [Frontend](#Frontend)
+2. Descompacte o arquivo baixado (shopper-main.zip) em seu computador e abra a pasta do projeto.
+
 
 
 ## Backend
