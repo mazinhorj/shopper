@@ -133,5 +133,5 @@ dist
 
 *.pdf
 
-# RETIRAR
-/imagens_para_front
+# RETIRAR PASTA
+imagens_para_front
