@@ -26,17 +26,17 @@ Em fase de desenvolvimento
 
 3. Criar o arquivo .env na pasta backend com as seguintes variáveis de ambiente:
 
-DB_HOST=localhost
+        DB_HOST=localhost
 
-DB_USER= // o usuário do seu banco de dados
+        DB_USER= // o usuário do seu banco de dados
 
-DB_PASS= // a senha do seu usuário no banco de daodos
+        DB_PASS= // a senha do seu usuário no banco de daodos
 
-DB_NAME= // nome do banco de dados 
+        DB_NAME= // nome do banco de dados 
 
-DB_DIALECT=mysql
+        DB_DIALECT=mysql
 
-PORT=5000
+        PORT=5000
 
 4. Rode no terminal o comando:
   <pre>npm start</pre>
