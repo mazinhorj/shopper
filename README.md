@@ -22,7 +22,7 @@ Em fase de desenvolvimento
     1.1. Clique <a href="">aqui</a> para baixar a base de dados.
 
 2. Abrir a pasta backend em um terminal e rodar o comando:
-  <pre>npm install</pre>
+        <pre>npm install</pre>
 
 3. Criar o arquivo .env na pasta backend com as seguintes variáveis de ambiente:
 
@@ -39,10 +39,11 @@ Em fase de desenvolvimento
         PORT=5000
 
 4. Rode no terminal o comando:
-  <pre>npm start</pre>
+        <pre>npm start</pre>
 
 5. Se tudo etiver correto, o backend da aplicação deverá estar ativo e você receberá no terminal a seguinte mensagem:
-    />> Mensagem do backend <<\
+
+        />> Mensagem do backend <<\
 
 OBS. Para quaisquer problemas na instalaçao, favor entrar em contato diretamente com o desenvolvedor: <a href="mailto:dev.mazinho@gmail.com">Mazinho</a>
 
