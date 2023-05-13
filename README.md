@@ -72,6 +72,6 @@ o script que define e preenche as tabelas utilizados na aplicação.
 OBS. Para quaisquer problemas na instalaçao, favor entrar em contato diretamente com o desenvolvedor: <a href="mailto:dev.mazinho@gmail.com">Mazinho</a>
 
 ## Ir para...
-[Topo](#Shopper) [Instalação](#Instalação) | [Backend](#Backend) | [Frontend](#Frontend)
+[Topo](#Shopper) | [Instalação](#Instalação) | [Backend](#Backend) | [Frontend](#Frontend)
 
 
