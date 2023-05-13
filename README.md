@@ -28,11 +28,11 @@ Em fase de desenvolvimento
 
         DB_HOST=localhost
 
-        DB_USER= // o usuário do seu banco de dados
+        DB_USER= #inserir o usuário do seu banco de dados
 
-        DB_PASS= // a senha do seu usuário no banco de daodos
+        DB_PASS= #inserir a senha do seu usuário no banco de daodos
 
-        DB_NAME= // nome do banco de dados 
+        DB_NAME= #inserir o nome do seu banco de dados 
 
         DB_DIALECT=mysql
 
