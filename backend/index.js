@@ -18,11 +18,10 @@ app.use(cors({
 }))
 
 //routes
-// const ApiRoutes = require('./routes/ApiRoutes')
-// app.use('/api', ApiRoutes)
+const ApiRoutes = require('./routes/ApiRoutes')
+app.use('/api', ApiRoutes)
 
-
-// app.use(express.static('public'))
+app.use(express.static('public'))
 
 const conn = require('./db/conn');
 try {

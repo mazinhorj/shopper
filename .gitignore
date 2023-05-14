@@ -130,8 +130,9 @@ dist
 .pnp.*
 
 # main project files
-
+database_original.sql
 *.pdf
 
 # RETIRAR PASTA
 imagens_para_front
+csv_files
