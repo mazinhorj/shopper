@@ -1,8 +1,7 @@
 const Product = require('../models/Product')
-const Pack = require('../models/Pack')
 const Csv = require('../models/Csv')
 
-const { Op } = require('sequelize')
+const { Op, Sequelize } = require('sequelize')
 
 const fs = require('fs')
 const csvFile = require('fast-csv')
@@ -15,27 +14,33 @@ module.exports = class ProductController {
   }
 
   static async newPrices(req, res) {
-    let fromFile = []
 
     const csv_analyzer = await Csv.findOne({ order: [['updatedAt', 'DESC']] })
+    if (!csv_analyzer) {
+      res.status(404).json({ message: "Não foi recebido o arquivo de atualização de preços." })
+      return
+    }
 
     let productsToUpdate = await Product.findAll()
+
+    let fromFile = []
 
     let allIds = productsToUpdate.length
     let ori_prod_ids = { productsToUpdate }
     productsToUpdate.map((id => {
       ori_prod_ids.productsToUpdate.push(parseInt(id.code))
     }))
-
     ori_prod_ids = productsToUpdate.slice(allIds)
 
-    // console.log(ori_prod_ids)
+    const filePath = path.resolve(__dirname, `../public/csv_files/${csv_analyzer.csv_file}`)
+    // verifica se o arquivo está na pasta de destino
+    if (!fs.existsSync(filePath)) {
+      res.status(404).json({ message: "Não encontrei o arquivo de atualização de preços. Faça o upload novamente." })
+      return
+    }
 
-    const stream = fs.createReadStream(
-      path.resolve(__dirname, `../public/csv_files/${csv_analyzer.csv_file}`)
-    )
-
-    stream
+    // fluxo de leitura do arquivo
+    fs.createReadStream(filePath)
       .pipe(
         csvFile.parse({
           headers: true
@@ -48,34 +53,38 @@ module.exports = class ProductController {
       .on('end', rowCount => {
         console.log(`Arquivo com ${rowCount} linhas:`)
 
+        // pegar apenas as ids dos produtos que vieram no arquivo para atualizar
         let allNewIds = fromFile.length
-        // console.log(`QTY IDS ${allNewIds}`)
-
         let new_prod_ids = { fromFile }
         fromFile.map((id => {
           new_prod_ids.fromFile.push(parseInt(id.product_code))
         }))
         new_prod_ids = fromFile.slice(allNewIds)
 
-
-        let allNewPrices = fromFile.length
-        // console.log(allNewPrices)
-        // console.log(allNewIds)
-
+        // pegar apenas os preços dos produtos que vieram no arquivo para atualizar
         let new_prod_prices = { fromFile }
         fromFile.map((price => {
           let nN = parseFloat(price.new_price).toFixed(2)
           new_prod_prices.fromFile.push(parseFloat(nN))
         }))
 
-        let nfromFile = fromFile.slice(0, -((fromFile.length/4)))
-        console.log(nfromFile)
+        let msgs = []
+        let msgCusto = {}
+        let msgDez = {}
+
+        let updatedProducts = []
+        let updatedProduct = {}
+
+        let nfromFile = fromFile.slice(0, -((fromFile.length / 4)))
+        
+        // verifica se o arquivo tem dados diferentes do esperado
         if (nfromFile.includes(NaN)) {
           res.status(422).json({ message: "Seu arquivo contém preços em formato inválido. Por favor carregue um novo arquivo!" })
           return
         } else {
           new_prod_prices = fromFile.slice(0, -allNewIds)
           fromFile = fromFile.slice(0, -allNewIds)
+          // seleciona apenas os produtos a serem atualizados
           Product.findAll({
             where: {
               code: {
@@ -84,67 +93,111 @@ module.exports = class ProductController {
             }
           }).then(products => {
             productsToUpdate = products
-            // console.log(productsToUpdate)
 
             // validações
             // existe no arquivo
 
             if (new_prod_ids.length <= 0 || new_prod_prices.length <= 0) {
-              res.status(422).json({ message: "Dados insuficientes. Por favor carregue um novo arquivo!" }) //apontar para a página de carregamento de arquivo
+              res.status(422).json({ message: "Por favor carregue um arquivo válido!" }) //apontar para a página de carregamento de arquivo
               return
             }
 
-            // console.log(ori_prod_ids, new_prod_ids, new_prod_prices)
-
+            // verifica se há produtos no arquivo de atualização que não constam na base da dados
             const naoCad = [
               ...new_prod_ids.filter(valor => !ori_prod_ids.includes(valor)),
-              // ...ori_prod_ids.filter(valor => !new_prod_ids.includes(valor)),
             ]
-            console.log(`NÃO CADASTRADOS: ${naoCad}`)
+            if (naoCad <= 0) {
+              console.log(`Verificando produtos...`)
+            } else {
+              console.log(`NÃO CADASTRADOS: ${naoCad}`)
+            }
 
             if (naoCad > 0) {
-              res.status(422).json({ message: `Existe um ou mais produto(s) não cadastrado(s) (CODIGO(S): ${naoCad}). Favor enviar outro arquivo` })
+              res.status(422).json({ message: `Existe um ou mais produto(s) não cadastrado(s) (CODIGO(S): ${naoCad}). Cadastre os produtos e recomece a análise.` })
               return
             }
 
-            // preços 
-
+            // validação de preços 
             let precoAbaixo = []
             for (let i = 0; i < (fromFile.length / 3); i++) {
               const productFromFile = fromFile[i];
               const productToUpdate = productsToUpdate.find(product => product.code == productFromFile.product_code);
 
               if (productToUpdate && parseFloat(productFromFile.new_price) < parseFloat(productToUpdate.cost_price)) {
-                console.log(`O novo preço do produto ${productToUpdate.name} é menor do que o seu custo.`);
+                msgCusto = {
+                  code: productToUpdate.code,
+                  message: `O novo preço do produto ${productToUpdate.name} é menor do que o seu custo.`,
+                  price: productToUpdate.cost_price,
+                  new_price: productFromFile.new_price
+                }
+                msgs.push(msgCusto)
                 precoAbaixo.push(productToUpdate)
-                console.log(`PRODUTO: ${productToUpdate.name}, CUSTO: ${productToUpdate.cost_price}, PREÇO ABAIXO: ${productFromFile.new_price}` )
-                // return
+              } else {
+                updatedProduct = {
+                  code: productToUpdate.code,
+                  name: productToUpdate.name,
+                  updated_price: productFromFile.new_price
+                }
+                updatedProducts.push(updatedProduct)
               }
             }
 
             let precoAcima = []
             for (let i = 0; i < (fromFile.length / 3); i++) {
-              const productFromFile = fromFile[i];
-              const productToUpdate = productsToUpdate.find(product => product.code == productFromFile.product_code);
-
+              const productFromFile = fromFile[i]
+              const productToUpdate = productsToUpdate.find(product => product.code == productFromFile.product_code)
               const comparaNewPrice = (parseFloat(productToUpdate.sales_price)) + (0.1) * (parseFloat(productToUpdate.sales_price))
-              // console.log(productToUpdate.code, comparaNewPrice)
 
               if (productToUpdate && parseFloat(productFromFile.new_price) > parseFloat(comparaNewPrice)) {
-                console.log(`O novo preço do produto ${productToUpdate.name} está acima do aumento permitido (10%).`);
+                msgDez = {
+                  code: productToUpdate.code,
+                  message: `O novo preço do produto ${productToUpdate.name} está acima do aumento permitido (10%).`,
+                  price: productToUpdate.sales_price,
+                  new_price: productFromFile.new_price,
+                  max_price: (((parseFloat(productToUpdate.sales_price)) * 0.1) + (parseFloat(productToUpdate.sales_price)))
+                }
+                msgs.push(msgDez)
                 precoAcima.push(productToUpdate)
-                console.log(`PRODUTO: ${productToUpdate.name}, CUSTO: ${productToUpdate.sales_price}, PREÇO ACIMA: ${productFromFile.new_price}`)
-                // return
+                // console.log(msgDez)
+              } else {
+                updatedProduct = {
+                  code: productToUpdate.code,
+                  name: productToUpdate.name,
+                  updated_price: productFromFile.new_price
+                }
+                updatedProducts.push(updatedProduct)
               }
             }
 
+            const newUpdatedProducts = updatedProducts.slice((updatedProducts.length / 2))
 
-            res.status(200).json({ fromFile, productsToUpdate })
+            const msgCustoF = "Validação de custo OK."
+            const msgDezF = "Validação de preços OK."
+
+            const toRemove = (new_prod_prices.length / 3)
+            let new_prices = new_prod_prices.slice(-toRemove)
+
+            // array pronto para atualização
+            const updates = new_prod_ids.map((code, i) => {
+              return { code: code, sales_price: new_prices[i] }
+            })
+
+            if (msgs.length !== 0) {
+              res.status(200).json({ msgs, productsToUpdate })
+            } else {
+              const codesToUpdate = updates.map(product => product.code)
+              // atualiza o banco de dados 
+              Product.update(
+                { sales_price: Sequelize.literal(`CASE code ${codesToUpdate.map((code, index) => `WHEN ${code} THEN ${new_prices[index]}`).join(' ')} END`) },
+                {
+                  where:
+                    { code: { [Op.in]: codesToUpdate } }
+                }
+              )
+              res.status(200).json({ msgCustoF, msgDezF, newUpdatedProducts })
+            }
           })
         }
-
-
-
       })
 
   }
