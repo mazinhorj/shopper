@@ -25,9 +25,12 @@ Em fase de desenvolvimento
 3. Criando e populando o banco de dados:
 
     3.1. Crie um banco de dados com o nome <code>shopper</code>.
+
     3.2. Execute os passos 3.3 e 3.4 apenas após iniciar a aplicação pela primeira vez.
+    
     3.3. Encontre o arquivo <code>database.sql</code>. Esse arquivo contém
 o script que define e preenche as tabelas utilizados na aplicação.
+    
     3.4. Execute o arquivo no seu gerenciador de banco de dados.
 
 
