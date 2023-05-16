@@ -56,11 +56,12 @@ const Analise = () => {
         {/* {msgs.length === 0 && <h2>Carregando...</h2>} */}
         {msgs.map((m) => (
           <div key={m.code}>
-            <p>COD.: {m.code}</p>
-            <p>Produto: {m.name}</p>
-            <p>Pendência: {m.msg}</p>
-            <p>Pendência: {m.msg}</p>
-            <p>Pendência: {m.msg}</p>
+            <span>Código: {m.code}</span>
+            <span>Produto: {m.name}</span>
+            <span>Pendência: {m.msg}</span>
+            <span>Preço: R$ {m.price}</span>
+            <span>Novo Preço: R$ {m.new_price}</span>
+            <span>Preço Máximo: R$ {m.max_price}</span>
             <hr />
           </div>
         ))}
