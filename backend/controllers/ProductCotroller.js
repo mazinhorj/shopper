@@ -10,7 +10,12 @@ const path = require('path')
 module.exports = class ProductController {
   static async getAllProducts(req, res) {
     const products = await Product.findAll()
-    res.status(200).json({ products })
+    if (products.length === 0) {
+      res.status(404).json({ message: "Não há produtos cadastrados." })
+      return
+    } else {
+      res.status(200).json({ products })
+    }
   }
 
   static async newPrices(req, res) {
@@ -126,9 +131,11 @@ module.exports = class ProductController {
               if (productToUpdate && parseFloat(productFromFile.new_price) < parseFloat(productToUpdate.cost_price)) {
                 msgCusto = {
                   code: productToUpdate.code,
-                  message: `O novo preço do produto ${productToUpdate.name} é menor do que o seu custo.`,
+                  name: productToUpdate.name,
+                  msg: `O novo preço do produto é menor do que o seu custo.`,
                   price: productToUpdate.cost_price,
-                  new_price: productFromFile.new_price
+                  new_price: productFromFile.new_price,
+                  max_price: (((parseFloat(productToUpdate.sales_price)) * 0.1) + (parseFloat(productToUpdate.sales_price))).toFixed(2)
                 }
                 msgs.push(msgCusto)
                 precoAbaixo.push(productToUpdate)
@@ -151,10 +158,11 @@ module.exports = class ProductController {
               if (productToUpdate && parseFloat(productFromFile.new_price) > parseFloat(comparaNewPrice)) {
                 msgDez = {
                   code: productToUpdate.code,
-                  message: `O novo preço do produto ${productToUpdate.name} está acima do aumento permitido (10%).`,
+                  name: productToUpdate.name,
+                  msg: `O novo preço do produto está acima do aumento permitido (10%).`,
                   price: productToUpdate.sales_price,
                   new_price: productFromFile.new_price,
-                  max_price: (((parseFloat(productToUpdate.sales_price)) * 0.1) + (parseFloat(productToUpdate.sales_price)))
+                  max_price: (((parseFloat(productToUpdate.sales_price)) * 0.1) + (parseFloat(productToUpdate.sales_price))).toFixed(2)
                 }
                 msgs.push(msgDez)
                 precoAcima.push(productToUpdate)

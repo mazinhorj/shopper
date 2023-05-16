@@ -14,10 +14,10 @@ module.exports = class CsvController {
     }
     try {
       await Csv.create({ csv_file })
-      // res.status(201).json({ message: `Arquivo inserido com sucesso. Verifique se existem pendências`, csv_file })
-      res.send(csv_file)
+      res.status(201).json({ message: `Arquivo enviado com sucesso.`, csv_file })
+      // res.send(csv_file)
     } catch (error) {
-      res.status(500).json({ message: "Algo não saiu como esperado. Tente de novo: " + error })
+      res.status(404).json({ message: "Algo não saiu como esperado. Tente de novo." })
     }
 
   }

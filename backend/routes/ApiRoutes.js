@@ -6,8 +6,8 @@ const CsvController = require('../controllers/CsvController')
 
 const { fileUpload } = require('../helpers/file-upload')
 
-// start route
-router.post('/home', fileUpload.single('csv_file'), CsvController.sendFile) //
+// send route
+router.post('/send', fileUpload.single('csv_file'), CsvController.sendFile) //
 
 router.get('/analise', ProductController.newPrices)
 

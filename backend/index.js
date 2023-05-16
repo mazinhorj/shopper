@@ -14,7 +14,7 @@ app.use(
 )
 
 app.use(cors({
-  credentials: true, origin: 'http://localhost:5000'
+  credentials: true, origin: 'http://localhost:5173'
 }))
 
 //routes
