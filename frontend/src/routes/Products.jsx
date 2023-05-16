@@ -1,5 +1,6 @@
 import api from '../axios/config'
 import { useState, useEffect } from 'react'
+import './Products.css'
 
 const Products = () => {
   const [products, setProducts] = useState([])
@@ -24,10 +25,11 @@ const Products = () => {
 
       {products.length > 0 &&
         products.map((product) => (
-          <div key={product.code}>
-            <span>{product.name}</span>
-            <span>Preço de Custo: R$ {product.cost_price}</span>
-            <span>Preço de Venda: R$ {product.sales_price}</span>
+          <div key={product.code} className='cardProd'>
+            <span>Código: {product.code}. </span>
+            <span>{product.name}</span><br />
+            <span>Preço de Custo: R$ {product.cost_price}</span><br />
+            <span>Preço de Venda: R$ {product.sales_price}</span><br />
           </div>
         ))
       }

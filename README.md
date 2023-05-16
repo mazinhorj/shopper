@@ -74,7 +74,9 @@ o script que define e preenche as tabelas utilizados na aplicação.
 
 6. Se tudo etiver correto, o frontend da aplicação deverá estar ativo e você receberá no terminal a seguinte mensagem:
 
-        />> Mensagem do frontend <<\
+          ➜  Local:   http://localhost:5173/
+          ➜  Network: use --host to expose
+          ➜  press h to show help
 
 7. Em seu navegador, abra o endereço indicado no terminal, conforme a mensagem acima.
 

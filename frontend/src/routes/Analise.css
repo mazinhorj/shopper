@@ -1,14 +1,19 @@
-.cardProd {
+.cardErros {
   display: block;
-  background-color: rgba(164, 197, 130, 0.603);
+  background-color: rgb(205, 152, 152);
   padding: .8rem;
   border-radius: 1.4rem;
   margin-bottom: .4rem;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.381);
 }
 
-.cardProd span {
+.cardErros span {
   font-weight: bold;
   color: black;
+  
+}
 
+#final {
+  margin-top: 1rem;
+  text-align: center;
 }
