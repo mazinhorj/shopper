@@ -16,24 +16,25 @@ const Home = () => {
     setCsv_file(e.target.files[0])
   }
 
-  console.log(csv_file)
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    
     let msgType = 'success'
     let msgText = ''
-
+    
     const formData = new FormData()
-
+    
     formData.append("csv_file", csv_file)
-
+    
+    console.log(formData)
+    console.log(csv_file)
 
     const data = await api.post('/send', formData, {
     }
     ).then((response) => {
       msgText = "Arquivo enviado com sucesso"
-      return response.data
+      return response.data.message
     }).catch((error) => {
       console.log(error)
       msgText = "Escolha um arquivo válido."

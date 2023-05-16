@@ -10,13 +10,14 @@ const Products = () => {
   useEffect(() => {
     api.get('/products').then((res) => {
       setProducts(res.data.products)
+      // console.log(products)
     }).catch((err) => {
+      console.log(err)
       msgType = 'error'
-      return err.response.data
+      return err.res.data
     })
   }, [])
 
-  // console.log(products)
 
   return (
     <div>
